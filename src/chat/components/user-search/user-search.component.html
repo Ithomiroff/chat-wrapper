@@ -3,7 +3,13 @@
     <fa-icon [icon]="arrowIcon" size="lg" (click)="closeInputMode.emit()"></fa-icon>
   </div>
   <div class="block__content">
-    <input [formControl]="userControl" class="user-input" type="text" placeholder="Поиск пользователей">
+    <input
+      [formControl]="userControl"
+      class="user-input"
+      type="text"
+      placeholder="Поиск пользователей"
+      #input
+    >
   </div>
 </div>
 <span class="header-control"  (click)="clear()">

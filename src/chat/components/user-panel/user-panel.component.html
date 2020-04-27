@@ -14,7 +14,7 @@
       <span class="block__content-text block__content-text_title">Пользователи</span>
     </div>
   </div>
-  <span class="header-control" (click)="this.changeMode.emit()">
+  <span class="header-control" (click)="onChange()">
       <fa-icon [icon]="searchIcon" size="lg"></fa-icon>
   </span>
 </ng-template>
@@ -22,6 +22,6 @@
 <ng-template #search>
   <app-user-search
   (changeValue)="changeSearchValue.emit($event)"
-  (closeInputMode)="this.changeMode.emit()"
+  (closeInputMode)="onChange()"
   ></app-user-search>
 </ng-template>

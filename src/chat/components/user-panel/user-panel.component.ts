@@ -7,7 +7,9 @@ import {faBars, faSearch} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./user-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserPanelComponent implements OnInit {
+export class UserPanelComponent {
+
+  @Input() allowActions: boolean;
 
   @Input() mode: PanelType = 'default';
 
@@ -19,11 +21,7 @@ export class UserPanelComponent implements OnInit {
 
   searchIcon = faSearch;
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
+  onChange = (): void => this.allowActions && this.changeMode.emit();
 }
 
 export type PanelType = 'search' | 'default';

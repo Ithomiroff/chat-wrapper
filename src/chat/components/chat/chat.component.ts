@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {PanelType} from '../user-panel/user-panel.component';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {ChatContactsStateService} from '../../services/chat-contacts-state.service';
+import {IContact, IContactExtend} from '../../models/contact.interface';
 
 @Component({
   selector: 'app-chat',
@@ -10,9 +12,15 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class ChatComponent implements OnInit {
 
-  loadingUser$ = new BehaviorSubject<boolean>(true);
+  contacts$: Observable<IContactExtend[]> = this.chatContacts.contacts$;
 
-  error$ = new BehaviorSubject<boolean>(false);
+  loadingContacts$: Observable<boolean> = this.chatContacts.loading$;
+
+  errorContacts$: Observable<boolean> = this.chatContacts.error$;
+
+  allowActionsContacts$: Observable<boolean> = this.chatContacts.allowActions$;
+
+  currentUser: IContact = this.chatContacts.currentUser;
 
   panelMode: PanelType = 'default';
 
@@ -20,14 +28,13 @@ export class ChatComponent implements OnInit {
 
   errorMessageChat = `Не удалось загрузить переписку с пользователем`;
 
-  constructor() {
+  constructor(
+    private chatContacts: ChatContactsStateService
+  ) {
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.loadingUser$.next(false);
-      // this.error$.next(true)
-    }, 1500);
+
   }
 
   onTogglePanelMode() {
@@ -35,6 +42,6 @@ export class ChatComponent implements OnInit {
   }
 
   onChangeSearchValue($event: string) {
-    console.warn($event);
+    this.chatContacts.filterContacts($event);
   }
 }

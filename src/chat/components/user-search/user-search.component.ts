@@ -1,4 +1,14 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {debounceTime, map} from 'rxjs/operators';
@@ -10,11 +20,13 @@ import {faArrowLeft, faTimes} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./user-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserSearchComponent implements OnInit, OnDestroy {
+export class UserSearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Output() changeValue = new EventEmitter<string>();
 
   @Output() closeInputMode = new EventEmitter<void>();
+
+  @ViewChild('input') input;
 
   userControl: FormControl = new FormControl('');
 
@@ -35,10 +47,15 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     this.sub && this.sub.unsubscribe();
   }
 
+  ngAfterViewInit(): void {
+    this.input && this.input.nativeElement && this.input.nativeElement.focus();
+  }
+
   clear() {
     if (this.userControl.value && this.userControl.value.length < 1) {
       return;
     }
     this.userControl.setValue('');
+    this.input.nativeElement.focus();
   }
 }

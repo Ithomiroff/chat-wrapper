@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PanelType} from '../user-panel/user-panel.component';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import {IContact, IContactExtend} from '../../models/contact.interface';
 
 @Component({
   selector: 'app-user-list',
@@ -9,6 +10,10 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements OnInit {
+
+  @Input() contacts: IContactExtend[];
+
+  @Input() currentUser: IContact;
 
   @Input() headerPanelMode: PanelType;
 
@@ -21,5 +26,8 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  trackByFn = (index, item: IContact) => item.userId;
+
 
 }

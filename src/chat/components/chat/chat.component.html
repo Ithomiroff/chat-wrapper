@@ -3,6 +3,7 @@
   <div class="chat-inner">
     <div class="chat-user">
       <app-user-panel
+        [allowActions]="allowActionsContacts$ | async"
         [mode]="panelMode"
         (changeSearchValue)="onChangeSearchValue($event)"
         (changeMode)="onTogglePanelMode()"
@@ -10,10 +11,13 @@
 
 
       <app-loader-holder
-        [loading]="loadingUser$ | async"
+        [loading]="loadingContacts$ | async"
+        [error]="errorContacts$ | async"
         [errorMessage]="errorMessageUserList"
       >
         <app-user-list
+          [currentUser]="currentUser"
+          [contacts]="contacts$ | async"
         ></app-user-list>
       </app-loader-holder>
 
@@ -22,19 +26,19 @@
       <app-chat-content-header>
       </app-chat-content-header>
 
-      <app-loader-holder
-        [loading]="loadingUser$ | async"
-        [error]="error$ | async"
-        [errorMessage]="errorMessageChat"
-      >
-        <app-chat-content
-        ></app-chat-content>
+<!--      <app-loader-holder-->
+<!--        [loading]="loadingUser$ | async"-->
+<!--        [error]="error$ | async"-->
+<!--        [errorMessage]="errorMessageChat"-->
+<!--      >-->
+<!--        <app-chat-content-->
+<!--        ></app-chat-content>-->
 
 
-        <app-chat-messager
-        ></app-chat-messager>
+<!--        <app-chat-messager-->
+<!--        ></app-chat-messager>-->
 
-      </app-loader-holder>
+<!--      </app-loader-holder>-->
 
     </div>
   </div>

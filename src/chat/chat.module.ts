@@ -11,6 +11,10 @@ import { ChatContentHeaderComponent } from './components/chat-content-header/cha
 import { ChatMessagerComponent } from './components/chat-messager/chat-messager.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ChatService} from './services/chat.service';
+import {ChatContactsStateService} from './services/chat-contacts-state.service';
+import { MessagePipe } from './pipes/message.pipe';
+import { UserNamePipe } from './pipes/user-name.pipe';
+import {ChatMessageStateService} from './services/chat-message-state.service';
 
 
 @NgModule({
@@ -22,7 +26,9 @@ import {ChatService} from './services/chat.service';
     UserSearchComponent,
     LoaderHolderComponent,
     ChatContentHeaderComponent,
-    ChatMessagerComponent
+    ChatMessagerComponent,
+    MessagePipe,
+    UserNamePipe,
   ],
   imports: [
     CommonModule,
@@ -30,10 +36,12 @@ import {ChatService} from './services/chat.service';
     FontAwesomeModule
   ],
   exports: [
-    ChatComponent
+    ChatComponent,
   ],
   providers: [
-    ChatService
+    ChatService,
+    ChatContactsStateService,
+    ChatMessageStateService
   ]
 })
 export class ChatModule {
