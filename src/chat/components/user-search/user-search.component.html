@@ -1,11 +1,12 @@
-<div class="field">
-  <div class="field__icon field__icon_small field__icon_point">
-    <fa-icon [icon]="arrowIcon" size="2x" (click)="closeInputMode.emit()"></fa-icon>
+<div class="block">
+  <div class="block__icon block__icon_fix block__icon_point">
+    <fa-icon [icon]="arrowIcon" size="lg" (click)="closeInputMode.emit()"></fa-icon>
   </div>
-  <div class="field__content">
+  <div class="block__content">
     <input [formControl]="userControl" class="user-input" type="text" placeholder="Поиск пользователей">
   </div>
 </div>
 <span class="header-control"  (click)="clear()">
     <fa-icon [icon]="closeIcon" size="lg"></fa-icon>
 </span>
+
