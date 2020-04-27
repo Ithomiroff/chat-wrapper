@@ -1,0 +1,334 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
+
+
+$font-size: 16px;
+$blue:  #7c97ff;;
+
+.chat {
+  font-family: sans-serif;
+  font-size: $font-size;
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  overflow-y: hidden;
+  &-inner {
+    display: flex;
+    height: inherit;
+  }
+  &-user {
+    position: relative;
+    width: 25%;
+    box-shadow: -1px 2px 10px 0 rgba(0,0,0,0.2);
+    z-index: 99;
+  }
+  &-content {
+    position: relative;
+    width: 75%;
+  }
+
+  &-header {
+    position: relative;
+    padding: 10px 40px 10px 12px;
+    height: 70px;
+    border-bottom: 1px solid #e4e3e3;
+  }
+
+  .header-control {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    transform: translate(50%, -50%);
+    cursor: pointer;
+    img {
+      max-width: 24px;
+    }
+  }
+
+  .block {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    background-color: #fff;
+    padding: 10px 12px;
+    &_user {
+      height: 85px;
+      transition: background-color .1s ease-in;
+      cursor: pointer;
+      &:hover {
+        background-color: #e4e3e3;
+      }
+      .block__icon {
+        margin-right: 10px;
+      }
+    }
+
+    &__icon {
+      flex-basis: 18%;
+    }
+    &__content {
+      flex-basis: 100%;
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      &-text {
+        &_small {
+          font-size: 12px;
+          color: #A8A8A8;
+          max-height: 40px;
+          overflow-y: hidden;
+        }
+        &_m {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+  .field {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    &_user {
+      background-color: #fff;
+      padding: 10px 12px;
+      transition: background-color .1s ease-in;
+      cursor: pointer;
+      &:hover {
+        background-color: #e4e3e3;
+      }
+      .field__icon {
+        flex-basis: 18%;
+        margin-right: 10px;
+      }
+      .field__content {
+        flex-basis: 100%;
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+      }
+      .user-name {
+        display: inline-block;
+        margin-bottom: 5px;
+      }
+      .message {
+        font-size: 12px;
+        color: #A8A8A8;
+        max-height: 40px;
+        overflow-y: hidden;
+      }
+    }
+    &__icon {
+      flex-basis: 15%;
+      &_user {
+        flex-basis: 8%;
+      }
+      &_small {
+        img {
+          max-width: 24px!important;
+        }
+      }
+      &_point {
+        cursor: pointer;
+      }
+      img {
+        max-width: 48px;
+      }
+    }
+    &__content {
+      flex-basis: 100%;
+    }
+
+    .user-input {
+      width: 100%;
+      font-size: $font-size;
+      line-height: 35px;
+      border: none;
+      outline: none;
+    }
+  }
+
+  &-loader {
+    position: absolute;
+    top: 40%;
+    right: 50%;
+    transform: translate(50%, 50%);
+  }
+
+  &-area {
+    height: 100%;
+    opacity: 1;
+    transition: opacity .3s ease-in;
+    overflow-y: auto;
+    &_hidden {
+      opacity: 0;
+    }
+  }
+
+  .error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    text-align: center;
+    &__icon {
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+  }
+
+
+  &-messages {
+    height: 80%;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  &-messager {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    background: #fff;
+  }
+
+  .messager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__input {
+      resize: none;
+      border-radius: 6px;
+      padding: 8px;
+    }
+    &__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      height: 35px;
+      width: 35px;
+      margin-left: 6px;
+      border-radius: 6px;
+      &_blue {
+        background: $blue;
+      }
+      img {
+        width: 16px;
+      }
+    }
+  }
+
+  .msg {
+    display: flex;
+    width: 100%;
+    font-size: 12px;
+    margin-bottom: 30px;
+    position: relative;
+    &_mine {
+      justify-content: flex-end;
+    }
+    &_alert {
+      justify-content: center;
+      .msg-content {
+        background-color: #ccc;
+      }
+    }
+    &-content {
+      max-width: 40%;
+      background-color: $blue;
+      color: #ffffff;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2);
+      &__date {
+        position: absolute;
+        bottom: -15px;
+        font-size: 10px;
+      }
+    }
+  }
+
+
+
+  /* Let's get this party started */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(204, 204, 204, 0.64);
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(204, 204, 204, 0.4);
+  }
+
+
+
+  .lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    &_small {
+      width: 35px;
+      height: 35px;
+      &:after {
+        content: " ";
+        display: block;
+        width: 16px!important;
+        height: 16px!important;
+        margin: 8px;
+        border-radius: 50%;
+        border: 2px solid $blue!important;
+        border-color: $blue transparent $blue transparent!important;
+        animation: lds-dual-ring 1.2s linear infinite;
+      }
+    }
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 35px;
+    height: 35px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #000000;
+    border-color: #000000 transparent #000000 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+}
