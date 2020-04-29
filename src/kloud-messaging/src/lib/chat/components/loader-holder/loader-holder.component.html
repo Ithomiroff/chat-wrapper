@@ -1,0 +1,14 @@
+<div class="chat-loader" *ngIf="loading && !error">
+  <div class="lds-dual-ring"></div>
+</div>
+<div class="chat-loader" *ngIf="error">
+  <div class="error">
+    <span class="error__icon">
+      <fa-icon [icon]="icon" size="3x"></fa-icon>
+    </span>
+    <span class="error__text">{{errorMessage}}</span>
+  </div>
+</div>
+<div class="chat-area" [ngClass]="{'chat-area_hidden': loading || error}">
+  <ng-content></ng-content>
+</div>

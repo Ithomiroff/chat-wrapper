@@ -1,0 +1,8 @@
+<p-listbox [options]="messages">
+  <p-header>
+    All Messages
+  </p-header>
+  <ng-template let-message pTemplate="item">
+      {{message.text}}
+  </ng-template>
+</p-listbox>

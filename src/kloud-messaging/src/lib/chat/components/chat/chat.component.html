@@ -1,0 +1,54 @@
+
+<div class="chat">
+  <div class="chat-inner">
+    <div class="chat-user">
+      <app-user-panel
+        [allowActions]="allowActionsContacts$ | async"
+        [mode]="panelMode"
+        (changeSearchValue)="onChangeSearchValue($event)"
+        (changeMode)="onTogglePanelMode()"
+      ></app-user-panel>
+
+
+      <app-loader-holder
+        [loading]="loadingContacts$ | async"
+        [error]="errorContacts$ | async"
+        [errorMessage]="errorMessageUserList"
+      >
+        <app-user-list
+          [selectedUserChat]="selectedContactChat$ | async"
+          [currentUser]="currentUser"
+          [contacts]="contacts$ | async"
+          (selectUserId)="selectUser($event)"
+        ></app-user-list>
+      </app-loader-holder>
+
+    </div>
+    <div class="chat-content">
+      <app-chat-content-header [contact]="selectedContactChat$ | async">
+      </app-chat-content-header>
+
+      <app-loader-holder
+        [loading]="loadingChat$ | async"
+        [error]="errorChat$ | async"
+        [errorMessage]="errorMessageChat$ | async"
+      >
+        <app-chat-content
+          [selectedChat]="selectedChat$ | async"
+          [messages]="messages$ | async"
+          [currentUser]="currentUser"
+          [loadingChat]="loadingChat$ | async"
+        ></app-chat-content>
+
+        <app-chat-messager
+          [selectedChat]="selectedChat$ | async"
+          [visible]="allowPrintMessage$ | async"
+          (changeMessage)="onChangeMessage($event)"
+          (sendMessage)="onSendMessage()"
+        ></app-chat-messager>
+
+      </app-loader-holder>
+
+    </div>
+  </div>
+</div>

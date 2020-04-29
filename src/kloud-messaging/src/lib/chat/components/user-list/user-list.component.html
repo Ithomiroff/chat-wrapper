@@ -1,0 +1,19 @@
+<ng-container *ngFor="let contact of contacts;trackBy: trackByFn">
+  <div
+    class="block block_user"
+    [class.block_user_selected]="selectedUserChat && contact.userId === selectedUserChat.userId"
+    [class.block_user_unreaded]="contact.lastMessage && !contact.lastMessage.read"
+    (click)="selectUserId.emit(contact.userId)"
+    *ngIf="!contact.hidden"
+  >
+    <div class="block__icon">
+      <fa-icon [icon]="userIcon" size="3x"></fa-icon>
+    </div>
+    <div class="block__content">
+      <span class="block__content-text block__content-text_m">{{contact | userName}}</span>
+      <span class="block__content-text block__content-text_small">
+        {{contact.lastMessage | message : currentUser : contact}}
+      </span>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,27 @@
+<div class="chat-header">
+  <ng-container
+    *ngIf="mode === 'default'; then text; else search">
+  </ng-container>
+</div>
+
+
+<ng-template #text>
+  <div class="block">
+    <div class="block__icon block__icon_fix">
+      <fa-icon [icon]="menuIcon" size="lg"></fa-icon>
+    </div>
+    <div class="block__content">
+      <span class="block__content-text block__content-text_title">Пользователи</span>
+    </div>
+  </div>
+  <span class="header-control" (click)="onChange()">
+      <fa-icon [icon]="searchIcon" size="lg"></fa-icon>
+  </span>
+</ng-template>
+
+<ng-template #search>
+  <app-user-search
+  (changeValue)="changeSearchValue.emit($event)"
+  (closeInputMode)="onChange()"
+  ></app-user-search>
+</ng-template>
