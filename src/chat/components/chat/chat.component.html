@@ -44,6 +44,7 @@
           [selectedChat]="selectedChat$ | async"
           [visible]="allowPrintMessage$ | async"
           (changeMessage)="onChangeMessage($event)"
+          (sendMessage)="onSendMessage()"
         ></app-chat-messager>
 
       </app-loader-holder>

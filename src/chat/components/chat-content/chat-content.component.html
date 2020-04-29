@@ -1,29 +1,27 @@
 <div class="chat-messages">
 
-  {{selectedChat && selectedChat.typingMessage}}
+  <ng-container *ngIf="!selectedChat">
+    <div class="msg msg_center">
+      <div class="msg-content msg-content_empty-chat">
+      <span class="msg-content__icon">
+        <fa-icon [icon]="icon" size="3x"></fa-icon>
+      </span>
+        <span class="msg-content__text">
+        Начните беседу,<br> выбрав собеседника из списка
+      </span>
+      </div>
+    </div>
+  </ng-container>
 
-<!--  <ng-container *ngIf="!selectedUserChat">-->
-<!--    <div class="msg msg_center">-->
-<!--      <div class="msg-content msg-content_empty-chat">-->
-<!--      <span class="msg-content__icon">-->
-<!--        <fa-icon [icon]="icon" size="3x"></fa-icon>-->
-<!--      </span>-->
-<!--        <span class="msg-content__text">-->
-<!--        Начните беседу,<br> выбрав собеседника из списка-->
-<!--      </span>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </ng-container>-->
-
-<!--  <ng-container *ngIf="selectedUserChat && messages.length < 1 && !loadingChat">-->
-<!--    <div class="msg msg_alert">-->
-<!--      <div class="msg-content">-->
-<!--      <span class="msg-content__text">-->
-<!--        Пока что нет сообщений. Начните беседу.-->
-<!--      </span>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </ng-container>-->
+  <ng-container *ngIf="selectedChat && selectedChat.messagesList.length < 1 && !loadingChat">
+    <div class="msg msg_alert">
+      <div class="msg-content">
+      <span class="msg-content__text">
+        Пока что нет сообщений. Начните беседу.
+      </span>
+      </div>
+    </div>
+  </ng-container>
 
 <!--  <ng-container *ngFor="let msg of messages; trackBy: trackFn">-->
 <!--    <div-->

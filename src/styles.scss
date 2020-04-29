@@ -17,7 +17,8 @@ body {
 
 
 $font-size: 16px;
-$blue:  #DAE8FC;;
+$blue:  #DAE8FC;
+$blue-btn: #2e6fcb;
 
 .chat {
   font-family: sans-serif;
@@ -277,7 +278,7 @@ $blue:  #DAE8FC;;
       margin-left: 6px;
       border-radius: 6px;
       &_blue {
-        background: #2e6fcb;
+        background: $blue-btn;
       }
       img {
         width: 16px;
@@ -377,7 +378,7 @@ $blue:  #DAE8FC;;
         margin: 8px;
         border-radius: 50%;
         border: 2px solid $blue!important;
-        border-color: $blue transparent $blue transparent!important;
+        border-color: $blue-btn transparent $blue-btn transparent!important;
         animation: lds-dual-ring 1.2s linear infinite;
       }
     }

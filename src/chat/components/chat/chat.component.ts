@@ -68,7 +68,12 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  onChangeMessage($event: string) {
-    this.chatMessages.addTypingMessage($event);
+  onChangeMessage($event: string): void {
+    this.chatMessages.typingMessage($event);
+
+  }
+
+  onSendMessage(): void {
+    this.chatMessages.send();
   }
 }

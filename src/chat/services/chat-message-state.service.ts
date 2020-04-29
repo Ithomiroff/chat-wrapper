@@ -48,18 +48,54 @@ export class ChatMessageStateService extends AbstractChat {
     this.subs.push(sub);
   }
 
+  private findChat(contactId): number {
+    const currentChats = this.chats.getValue();
+    return currentChats.findIndex((c) => c.contactId === contactId);
+  }
+
+  private findCurrentChat(): number {
+    const userId = this.selectedContactChat.getValue()?.userId;
+    return this.findChat(userId);
+  }
+
   public selectChat(contact: IContact): void {
     if (!contact) {
       return;
     }
+
+    const chatExist = this.findChat(contact.userId) !== -1;
+
+    if (!chatExist) {
+      const newChat = new ContactChat(contact.userId);
+      const chats = this.chats.getValue();
+      chats.push(newChat);
+      this.chats.next(chats);
+    }
+
     this.selectedContactChat.next(contact);
 
-    const chat = new ContactChat(contact.userId);
-    const currentChats = this.chats.getValue();
-    currentChats.push(chat);
-    this.chats.next(currentChats);
-
     this.loadMessages();
+  }
+
+  public typingMessage(value: string): void {
+    const chatIndex = this.findCurrentChat();
+    const chats = this.chats.getValue();
+    const chat = chats[chatIndex];
+
+    if (chat) {
+      chat.savedMessage = value;
+    }
+
+    this.chats.next(chats);
+  }
+
+  public send(): void {
+    const chatIndex = this.findCurrentChat();
+    const chats = this.chats.getValue();
+    const chat = chats[chatIndex];
+    chat.loading = true;
+
+    this.chats.next(chats);
   }
 
   get selectedContactChat$(): Observable<IContact> {
@@ -97,19 +133,9 @@ export class ChatMessageStateService extends AbstractChat {
       this.selectedContactChat$
     ]).pipe(
       map(([chats, contact]) => {
-        return chats.find(c => c.contactUserId === contact.userId);
+        return chats.find(c => contact && c.contactId === contact.userId);
       }),
-      tap((c) => console.warn(c))
     );
-  }
-
-  public addTypingMessage(message: string): void {
-    const currentUser = this.selectedContactChat.getValue();
-    const chats = this.chats.getValue();
-    const chat = chats.find((c) => c.contactUserId === currentUser.userId);
-    chat.typingMessage = message;
-    chats.push(chat);
-    this.chats.next(chats);
   }
 
 }
