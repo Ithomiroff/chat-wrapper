@@ -103,4 +103,8 @@ export class ChatContactsStateService extends AbstractChat {
       );
   }
 
+  public findContact(userId: string): IContact {
+    return this.contacts.getValue().find((c) => c.userId === userId);
+  }
+
 }

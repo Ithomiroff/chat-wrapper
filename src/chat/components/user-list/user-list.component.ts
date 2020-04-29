@@ -13,11 +13,15 @@ export class UserListComponent implements OnInit {
 
   @Input() contacts: IContactExtend[];
 
+  @Input() selectedUserChat: IContact;
+
   @Input() currentUser: IContact;
 
   @Input() headerPanelMode: PanelType;
 
   @Output() changeModeHeader = new EventEmitter<void>();
+
+  @Output() selectUserId = new EventEmitter<string>();
 
   userIcon = faUserCircle;
 
@@ -28,6 +32,5 @@ export class UserListComponent implements OnInit {
   }
 
   trackByFn = (index, item: IContact) => item.userId;
-
 
 }

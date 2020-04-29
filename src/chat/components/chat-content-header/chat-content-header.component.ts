@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import {IContact} from '../../models/contact.interface';
 
 @Component({
   selector: 'app-chat-content-header',
@@ -7,13 +8,10 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./chat-content-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatContentHeaderComponent implements OnInit {
+export class ChatContentHeaderComponent {
+
+  @Input() contact: IContact;
 
   userIcon = faUserCircle;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

@@ -1,49 +1,46 @@
 <div class="chat-messages">
-  <div class="msg msg_alert">
-    <div class="msg-content">
-      <span class="msg-content__text">
-        Пока что нет сообщений. Начните беседу.
-      </span>
-    </div>
-  </div>
-  <div class="msg msg_mine">
-    <div class="msg-content">
-      <span class="msg-content__text">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus at laborum nemo provident suscipit! Aliquid eius ipsam iusto quis vero. Architecto autem commodi facilis magnam pariatur reprehenderit voluptatibus! Est modi nihil optio quo reprehenderit repudiandae saepe similique sit! Minus, porro!
-      </span>
-    </div>
-    <span class="msg-content__date">
-        Вы, 12 дек 2020
-    </span>
-  </div>
-  <div class="msg">
-    <div class="msg-content">
-      <span class="msg-content__text">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus at laborum nemo provident suscipit! Aliquid eius ipsam iusto quis vero. Architecto autem commodi facilis magnam pariatur reprehenderit voluptatibus! Est modi nihil optio quo reprehenderit repudiandae saepe similique sit! Minus, porro!
-      </span>
-    </div>
-    <span class="msg-content__date">
-        Вы, 12 дек 2020
-    </span>
-  </div>
-  <div class="msg">
-    <div class="msg-content">
-      <span class="msg-content__text">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus at laborum nemo provident suscipit! Aliquid eius ipsam iusto quis vero. Architecto autem commodi facilis magnam pariatur reprehenderit voluptatibus! Est modi nihil optio quo reprehenderit repudiandae saepe similique sit! Minus, porro!
-      </span>
-    </div>
-    <span class="msg-content__date">
-        Вы, 12 дек 2020
-    </span>
-  </div>
-  <div class="msg">
-    <div class="msg-content">
-      <span class="msg-content__text">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, quisquam.
-      </span>
-    </div>
-    <span class="msg-content__date">
-        Вы, 12 дек 2020
-    </span>
-  </div>
+
+  {{selectedChat && selectedChat.typingMessage}}
+
+<!--  <ng-container *ngIf="!selectedUserChat">-->
+<!--    <div class="msg msg_center">-->
+<!--      <div class="msg-content msg-content_empty-chat">-->
+<!--      <span class="msg-content__icon">-->
+<!--        <fa-icon [icon]="icon" size="3x"></fa-icon>-->
+<!--      </span>-->
+<!--        <span class="msg-content__text">-->
+<!--        Начните беседу,<br> выбрав собеседника из списка-->
+<!--      </span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </ng-container>-->
+
+<!--  <ng-container *ngIf="selectedUserChat && messages.length < 1 && !loadingChat">-->
+<!--    <div class="msg msg_alert">-->
+<!--      <div class="msg-content">-->
+<!--      <span class="msg-content__text">-->
+<!--        Пока что нет сообщений. Начните беседу.-->
+<!--      </span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </ng-container>-->
+
+<!--  <ng-container *ngFor="let msg of messages; trackBy: trackFn">-->
+<!--    <div-->
+<!--      class="msg"-->
+<!--      [class.msg_mine]="msg.userId === currentUser.userId"-->
+<!--    >-->
+<!--      <div class="msg-content">-->
+<!--      <span class="msg-content__text">-->
+<!--        Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
+<!--        Accusamus at laborum nemo provident suscipit! Aliquid eius ipsam iusto quis vero.-->
+<!--        Architecto autem commodi facilis magnam pariatur reprehenderit voluptatibus!-->
+<!--        Est modi nihil optio quo reprehenderit repudiandae saepe similique sit! Minus, porro!-->
+<!--      </span>-->
+<!--      </div>-->
+<!--      <span class="msg-content__date">-->
+<!--        Вы, 12 дек 2020-->
+<!--    </span>-->
+<!--    </div>-->
+<!--  </ng-container>-->
 </div>

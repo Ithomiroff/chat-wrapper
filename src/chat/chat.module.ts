@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChatComponent} from './components/chat/chat.component';
 import {UserListComponent} from './components/user-list/user-list.component';
 import {ChatContentComponent} from './components/chat-content/chat-content.component';
@@ -33,6 +33,7 @@ import {ChatMessageStateService} from './services/chat-message-state.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     FontAwesomeModule
   ],
   exports: [

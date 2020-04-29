@@ -13,6 +13,8 @@ export interface IContact {
 }
 
 export class IMessage {
+
+  id: string;
   // Уникальный идентификатор пользователя. Может быть сравнен с MessagingService::getCurrentUserId,
   // чтобы определить вы послали или вам.
   userId: string;

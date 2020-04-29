@@ -1,7 +1,14 @@
 <div class="chat-messager">
-  <div class="messager">
-    <textarea cols="60" rows="1" class="messager__input"></textarea>
-    <button class="messager__btn messager__btn_blue">
+  <form class="messager" (ngSubmit)="onSend($event)">
+    <textarea
+      cols="60"
+      [rows]="textRows$ | async"
+      class="messager__input"
+      [class.messager__input_error]="false"
+      [formControl]="messageControl"
+      (keydown.enter)="onSend($event)"
+    ></textarea>
+    <button type="submit" class="messager__btn messager__btn_blue">
       <fa-icon [icon]="icon" [styles]="{'color': '#fff'}"></fa-icon>
     </button>
     <div class="messager__btn">
@@ -10,5 +17,5 @@
     <div class="messager__btn">
       <fa-icon [icon]="iconTriangle" [styles]="{'color': 'red'}"></fa-icon>
     </div>
-  </div>
+  </form>
 </div>

@@ -16,29 +16,37 @@
         [errorMessage]="errorMessageUserList"
       >
         <app-user-list
+          [selectedUserChat]="selectedContactChat$ | async"
           [currentUser]="currentUser"
           [contacts]="contacts$ | async"
+          (selectUserId)="selectUser($event)"
         ></app-user-list>
       </app-loader-holder>
 
     </div>
     <div class="chat-content">
-      <app-chat-content-header>
+      <app-chat-content-header [contact]="selectedContactChat$ | async">
       </app-chat-content-header>
 
-<!--      <app-loader-holder-->
-<!--        [loading]="loadingUser$ | async"-->
-<!--        [error]="error$ | async"-->
-<!--        [errorMessage]="errorMessageChat"-->
-<!--      >-->
-<!--        <app-chat-content-->
-<!--        ></app-chat-content>-->
+      <app-loader-holder
+        [loading]="loadingChat$ | async"
+        [error]="errorChat$ | async"
+        [errorMessage]="errorMessageChat$ | async"
+      >
+        <app-chat-content
+          [selectedChat]="selectedChat$ | async"
+          [messages]="messages$ | async"
+          [currentUser]="currentUser"
+          [loadingChat]="loadingChat$ | async"
+        ></app-chat-content>
 
+        <app-chat-messager
+          [selectedChat]="selectedChat$ | async"
+          [visible]="allowPrintMessage$ | async"
+          (changeMessage)="onChangeMessage($event)"
+        ></app-chat-messager>
 
-<!--        <app-chat-messager-->
-<!--        ></app-chat-messager>-->
-
-<!--      </app-loader-holder>-->
+      </app-loader-holder>
 
     </div>
   </div>

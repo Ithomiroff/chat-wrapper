@@ -9,6 +9,10 @@ app.get('/api/contacts', function(req, res) {
   setTimeout(() => res.send(contacts), 2000)
 });
 
+app.get('/api/messages/:userId', function(req, res) {
+  setTimeout(() => res.send([]), 3000)
+});
+
 
 
 
