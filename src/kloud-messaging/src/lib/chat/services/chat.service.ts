@@ -16,6 +16,10 @@ export class ChatService {
   ) {
   }
 
+  sendMessage(text: IMessage): Observable<any> {
+    return this.messagingService.sendMessage(text);
+  }
+
   getContacts(): Observable<IContact[]> {
     // return this.http.get('/api/contacts').pipe(
     //   map((res) => res as IContact[]),

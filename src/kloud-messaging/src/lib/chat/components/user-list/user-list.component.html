@@ -1,4 +1,4 @@
-<ng-container *ngFor="let contact of contacts;trackBy: trackByFn">
+<ng-container *ngFor="let contact of contacts ;trackBy: trackByFn">
   <div
     class="block block_user"
     [class.block_user_selected]="selectedUserChat && contact.userId === selectedUserChat.userId"

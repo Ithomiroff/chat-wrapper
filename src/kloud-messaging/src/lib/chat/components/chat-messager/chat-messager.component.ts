@@ -1,9 +1,9 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {faExclamationTriangle, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-import {FormControl} from '@angular/forms';
-import {map} from 'rxjs/operators';
-import {BehaviorSubject} from 'rxjs';
-import {ContactChat} from '../../classes/contact-chat';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { faExclamationTriangle, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FormControl } from '@angular/forms';
+import { map } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { IChat } from '../../models/contact.interface';
 
 @Component({
   selector: 'app-chat-messager',
@@ -14,16 +14,16 @@ import {ContactChat} from '../../classes/contact-chat';
 export class ChatMessagerComponent implements OnInit, OnDestroy {
 
   @Input('selectedChat')
-  set chat(value: ContactChat) {
+  set chat(value: IChat) {
     if (!value) {
       return;
     }
-    this.selectedChat = value;
 
+    this.selectedChat = value;
     this.messageControl.setValue(value.savedMessage);
   }
 
-  selectedChat: ContactChat;
+  selectedChat: IChat;
 
   @Input() visible: boolean;
 
@@ -41,7 +41,9 @@ export class ChatMessagerComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
 
-  constructor() { }
+  constructor(
+  ) {
+  }
 
   updateRows = (value: string): void => {
     const rows = value.split('\n');
@@ -50,13 +52,13 @@ export class ChatMessagerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = this.messageControl.valueChanges
-      .pipe(
-        map((value: string) => {
-          this.updateRows(value);
-          this.changeMessage.emit(value);
-        })
-      )
-      .subscribe();
+    .pipe(
+      map((value: string) => {
+        this.updateRows(value);
+        this.changeMessage.emit(value);
+      })
+    )
+    .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -65,6 +67,9 @@ export class ChatMessagerComponent implements OnInit, OnDestroy {
 
   onSend($event: Event) {
     $event.preventDefault();
+    if (this.selectedChat.loading) {
+      return;
+    }
     this.sendMessage.emit();
   }
 }

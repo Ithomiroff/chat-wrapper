@@ -17,13 +17,13 @@
         [class.msg_mine]="msg.userId === currentUser.userId"
       >
         <div class="msg-content">
-      <span class="msg-content__text">
-        {{msg.text}}
-      </span>
-        </div>
+        <span class="msg-content__text">
+          {{msg.text}}
+        </span>
+      </div>
         <span class="msg-content__date">
-        {{msg.time}}
-    </span>
+          {{msg.time | date: 'dd.MM.yyyy'}}
+        </span>
       </div>
     </ng-container>
   </ng-container>

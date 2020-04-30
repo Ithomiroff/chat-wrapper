@@ -1,7 +1,0 @@
-:host ::ng-deep .ui-listbox {
-  display: contents;
-}
-
-:host ::ng-deep .ui-listbox-list-wrapper {
-  max-height: calc(100vh - 7.7em)
-}

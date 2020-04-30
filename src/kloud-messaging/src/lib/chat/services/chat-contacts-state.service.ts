@@ -149,4 +149,14 @@ export class ChatContactsStateService extends AbstractChat {
     this.contacts.next(contacts);
   }
 
+  readLastMessage(userId: string): void {
+    const contacts = this.contacts.getValue();
+    const contact = contacts.find(c => c.userId === userId);
+    if (!contact || contact && !contact.lastMessage) {
+      return;
+    }
+    contact.lastMessage.read = true;
+    this.contacts.next(contacts);
+  }
+
 }

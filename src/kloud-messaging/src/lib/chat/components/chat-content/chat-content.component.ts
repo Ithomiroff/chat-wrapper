@@ -1,16 +1,17 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {IContact, IMessage} from '../../models/contact.interface';
-import {faComments} from '@fortawesome/free-solid-svg-icons';
-import {ContactChat} from '../../classes/contact-chat';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { IChat, IContact, IMessage } from '../../models/contact.interface';
+import { faComments } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-chat-content',
   templateUrl: './chat-content.component.html',
-  styleUrls: ['./chat-content.component.scss']
+  styleUrls: ['./chat-content.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatContentComponent {
 
-  @Input('selectedChat') set chat(value: ContactChat) {
+  @Input('selectedChat')
+  set chat(value: IChat) {
     if (!value) {
       return;
     }
@@ -19,7 +20,7 @@ export class ChatContentComponent {
     this.scroll();
   }
 
-  selectedChat: ContactChat;
+  selectedChat: IChat;
 
   @Input() selectedUserChat: IContact;
 
@@ -36,17 +37,14 @@ export class ChatContentComponent {
   constructor() {
   }
 
-  trackFn = (index, msg: IMessage): string => msg.id;
+  trackFn = (index): number => index;
 
   scroll = () => {
     const ref = this.wrapperEl && this.wrapperEl.nativeElement;
     if (!ref) {
       return;
     }
-    ref.scrollIntoView(false);
     ref.scrollTop = ref.scrollHeight;
-    ref.scrollTop = ref.scrollHeight - ref.clientHeight;
-
   }
 
 }

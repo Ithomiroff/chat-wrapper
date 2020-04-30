@@ -1,12 +1,30 @@
-import {Injectable} from '@angular/core';
-import {AbstractChat} from './common.state';
-import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
-import {IContact, IMessage} from '../models/contact.interface';
-import {ChatService} from './chat.service';
-import {catchError, finalize, map, tap} from 'rxjs/operators';
-import {UserNamePipe} from '../pipes/user-name.pipe';
-import {ContactChat} from '../classes/contact-chat';
+import { Injectable } from '@angular/core';
+import { AbstractChat } from './common.state';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { IChat, IContact, IMessage } from '../models/contact.interface';
+import { ChatService } from './chat.service';
+import { catchError, finalize, map } from 'rxjs/operators';
+import { UserNamePipe } from '../pipes/user-name.pipe';
 
+
+class Stack {
+  constructor(req: Observable<any>, chat: IChat, callback) {
+    chat.error = false;
+    chat.loading = true;
+    const q = req.subscribe(msg => {
+      chat.loading = false;
+      chat.messagesList.push(msg);
+      chat.savedMessage = '';
+      callback({...chat});
+      q.unsubscribe();
+    }, () => {
+      chat.error = true;
+      chat.loading = false;
+      callback({...chat});
+      q.unsubscribe();
+    });
+  }
+}
 
 @Injectable()
 export class ChatMessageStateService extends AbstractChat {
@@ -15,7 +33,7 @@ export class ChatMessageStateService extends AbstractChat {
 
   private readonly messages = new BehaviorSubject<IMessage[]>([]);
 
-  private chats = new BehaviorSubject<ContactChat[]>([]);
+  private chats = new BehaviorSubject<IChat[]>([]);
 
   constructor(
     private chatService: ChatService
@@ -23,13 +41,14 @@ export class ChatMessageStateService extends AbstractChat {
     super();
   }
 
+
   private loadMessages(): void {
     const user = this.selectedContactChat.getValue();
     if (!user) {
       return;
     }
     const chats = this.chats.getValue();
-    const chat = chats.find((c) => c.contactUserId === user.userId);
+    const chat = chats.find((c) => c.contactId === user.userId);
 
     this.loading.next(true);
     const sub = this.chatService.getMessages(user.userId)
@@ -38,7 +57,6 @@ export class ChatMessageStateService extends AbstractChat {
           if (messages) {
             chat.messagesList = messages;
             this.chats.next(chats);
-            // this.messages.next(messages);
             this.loading.next(false);
           }
         }),
@@ -55,7 +73,7 @@ export class ChatMessageStateService extends AbstractChat {
 
   private findChat(contactId): number {
     const currentChats = this.chats.getValue();
-    return currentChats.findIndex((c) => c.contactUserId === contactId);
+    return currentChats.findIndex((c) => c.contactId === contactId);
   }
 
   private findCurrentChat(): number {
@@ -71,7 +89,13 @@ export class ChatMessageStateService extends AbstractChat {
     const chatExist = this.findChat(contact.userId) !== -1;
 
     if (!chatExist) {
-      const newChat = new ContactChat(contact.userId);
+      const newChat: IChat = {
+        contactId: contact.userId,
+        loading: false,
+        error: false,
+        messagesList: [],
+        savedMessage: ''
+      };
       const chats = this.chats.getValue();
       chats.push(newChat);
       this.chats.next(chats);
@@ -111,13 +135,13 @@ export class ChatMessageStateService extends AbstractChat {
     );
   }
 
-  get currentChat$(): Observable<ContactChat> {
+  get currentChat$(): Observable<IChat> {
     return combineLatest([
       this.chats,
       this.selectedContactChat$
     ]).pipe(
       map(([chats, contact]) => {
-        return chats.find(c => contact && c.contactUserId === contact.userId);
+        return chats.find(c => contact && c.contactId === contact.userId);
       }),
     );
   }
@@ -139,8 +163,23 @@ export class ChatMessageStateService extends AbstractChat {
     const chats = this.chats.getValue();
     const chat = chats[chatIndex];
     chat.loading = true;
-
+    chat.error = false;
     this.chats.next(chats);
+
+    const message: IMessage = {
+      time: +new Date(),
+      userId: chat.contactId,
+      text: chat.savedMessage
+    };
+
+
+    const req = this.chatService.sendMessage(message);
+    const stack = new Stack(req, chat, (newChat: IChat) => {
+      const allChats = this.chats.getValue();
+      const i = this.findChat(newChat.contactId);
+      allChats[i] = newChat;
+      this.chats.next(allChats);
+    });
   }
 
   public listenNewMessages(): Observable<IMessage> {

@@ -13,10 +13,16 @@
       <fa-icon [icon]="icon" [styles]="{'color': '#fff'}"></fa-icon>
     </button>
     <div class="messager__btn">
-      <div class="lds-dual-ring lds-dual-ring_small" *ngIf="selectedChat.loading"></div>
+      <div *ngIf="selectedChat.loading" class="lds-dual-ring lds-dual-ring_small"></div>
+
+      <fa-icon
+        *ngIf="selectedChat.error"
+         title="Произошла ошибка при отправке сообщения.Попробуйте снова."
+         [icon]="iconTriangle" [styles]="{'color': 'red'}"
+      ></fa-icon>
     </div>
-    <div class="messager__btn">
-      <fa-icon *ngIf="selectedChat.error" [icon]="iconTriangle" [styles]="{'color': 'red'}"></fa-icon>
-    </div>
+    <!--<div class="messager__btn">-->
+      <!--<fa-icon  [icon]="iconTriangle" [styles]="{'color': 'red'}"></fa-icon>-->
+    <!--</div>-->
   </form>
 </div>

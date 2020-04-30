@@ -1,17 +1,15 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {PanelType} from '../user-panel/user-panel.component';
 import {BehaviorSubject, Observable, pipe} from 'rxjs';
 import {ChatContactsStateService} from '../../services/chat-contacts-state.service';
-import {IContact, IContactExtend, IMessage} from '../../models/contact.interface';
+import { IChat, IContact, IContactExtend, IMessage } from '../../models/contact.interface';
 import {ChatMessageStateService} from '../../services/chat-message-state.service';
-import {combineLatest, map} from 'rxjs/operators';
-import {ContactChat} from '../../classes/contact-chat';
+import { filter, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
 
@@ -25,7 +23,7 @@ export class ChatComponent implements OnInit {
 
   selectedContactChat$: Observable<IContact> = this.chatMessages.selectedContactChat$;
 
-  selectedChat$: Observable<ContactChat> = this.chatMessages.currentChat$;
+  selectedChat$ = new BehaviorSubject<IChat>(null);
 
   loadingChat$: Observable<boolean> = this.chatMessages.loading$;
 
@@ -57,6 +55,19 @@ export class ChatComponent implements OnInit {
         })
       )
       .subscribe();
+
+
+    this.chatMessages.currentChat$
+      .pipe(
+        filter((c) => !!c),
+        map((chat) => {
+          this.selectedChat$.next(chat);
+          return chat.contactId;
+        }),
+        tap((userId) => this.chatContacts.readLastMessage(userId))
+      )
+      .subscribe()
+    ;
   }
 
   onTogglePanelMode() {

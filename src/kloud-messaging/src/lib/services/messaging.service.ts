@@ -87,13 +87,13 @@ export class MessagingService {
 
   // Отсылает сообщение пользователю.
   // Может вернуть ошибку в примерно 50% случаев (для симуляции).
-  sendMessage(message: Message) {
+  sendMessage(message: IMessage) {
     return new Observable((observer) => {
-      timer(1000).subscribe((_) => {
+      timer(1300).subscribe((_) => {
         if (this.shouldFail) {
           observer.error('Failed send message');
         } else {
-          observer.next();
+          observer.next(message);
         }
       });
     });
@@ -144,7 +144,6 @@ export class MessagingService {
       userId: from,
       text: 'Тестовое сообщение от ' + userId,
       time: +new Date().getUTCDate(),
-      id: '123'
     };
   }
 
